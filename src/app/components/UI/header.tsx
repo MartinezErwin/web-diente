@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { navigationLinks, contactLink } from "../links.js";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="w-full flex justify-center py-5">
@@ -17,19 +19,25 @@ export default function Header() {
           Diente a Diente
         </span>
         <ul className="hidden md:flex items-center gap-2">
-          {navigationLinks.map((link) => (
-            <li key={link.id}>
-              <a
-                href={link.href}
-                className={`px-6 py-2 rounded-full font-medium text-base transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-rose-300 hover:shadow-md ${
-                  link.isActive ? "bg-rose-100 " : ""
-                }`}
-                style={{ fontFamily: "var(--font-montserrat)" }}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+          {navigationLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <li key={link.id} className="relative">
+                <a
+                  href={link.href}
+                  className={`px-6 py-2 rounded-full font-medium text-base transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-rose-300 hover:shadow-md ${
+                    isActive ? "bg-rose-100 " : ""
+                  }`}
+                  style={{ fontFamily: "var(--font-montserrat)" }}
+                >
+                  {link.label}
+                </a>
+                {isActive && (
+                  <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-rose-400 rounded-full"></div>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         <a
@@ -60,24 +68,29 @@ export default function Header() {
         {isMenuOpen && (
           <div className="absolute top-20 left-4 right-4 bg-white rounded-2xl shadow-lg py-4 md:hidden z-50 animate-in slide-in-from-top-2 duration-300">
             <ul className="flex flex-col">
-              {navigationLinks.map((link, index) => (
-                <li
-                  key={link.id}
-                  className="transition-all duration-200 ease-in-out"
-                  style={{ animationDelay: `${index * 50}ms` }}
-                >
-                  <a
-                    href={link.href}
-                    className={`block px-6 py-3 font-medium text-base transition-all duration-200 ease-in-out hover:bg-rose-50 hover:pl-8 hover:shadow-sm ${
-                      link.isActive ? "bg-rose-100" : ""
-                    }`}
-                    style={{ fontFamily: "var(--font-montserrat)" }}
-                    onClick={() => setIsMenuOpen(false)}
+              {navigationLinks.map((link, index) => {
+                const isActive = pathname === link.href;
+                return (
+                  <li
+                    key={link.id}
+                    className="transition-all duration-200 ease-in-out"
+                    style={{ animationDelay: `${index * 50}ms` }}
                   >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+                    <a
+                      href={link.href}
+                      className={`block px-6 py-3 font-medium text-base transition-all duration-200 ease-in-out ${
+                        isActive
+                          ? "bg-rose-50 pl-8 shadow-sm border-l-4 border-rose-400"
+                          : "hover:pl-8 hover:shadow-sm hover:bg-rose-50"
+                      }`}
+                      style={{ fontFamily: "var(--font-montserrat)" }}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                );
+              })}
               <li
                 className="border-t border-gray-200 mt-2 pt-2 transition-all duration-200 ease-in-out"
                 style={{ animationDelay: `${navigationLinks.length * 50}ms` }}
