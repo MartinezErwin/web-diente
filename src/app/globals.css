@@ -8,3 +8,97 @@ html {
 body {
   font-family: var(--font-montserrat), var(--font-geist-sans), sans-serif;
 }
+
+/* Modal animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-fadeOut {
+  animation: fadeOut 0.3s ease-out;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-scaleOut {
+  animation: scaleOut 0.3s ease-in;
+}
+
+.animate-slideInFromTop {
+  animation: slideInFromTop 0.3s ease-out;
+}
+
+/* Smooth transitions for modal content */
+.modal-content > * {
+  animation: slideInFromTop 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+.modal-content > *:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.modal-content > *:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.modal-content > *:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.modal-content > *:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.modal-content > *:nth-child(5) {
+  animation-delay: 0.5s;
+}

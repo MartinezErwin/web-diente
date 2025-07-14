@@ -6,6 +6,7 @@ import { useState } from "react";
 
 export default function Tratamientos() {
   const [modalAbierto, setModalAbierto] = useState(false);
+  const [modalCerrando, setModalCerrando] = useState(false);
   const [tratamientoSeleccionado, setTratamientoSeleccionado] = useState<
     (typeof tratamientos)[0] | null
   >(null);
@@ -13,11 +14,22 @@ export default function Tratamientos() {
   const abrirModal = (tratamiento: (typeof tratamientos)[0]) => {
     setTratamientoSeleccionado(tratamiento);
     setModalAbierto(true);
+    setModalCerrando(false);
   };
 
   const cerrarModal = () => {
-    setModalAbierto(false);
-    setTratamientoSeleccionado(null);
+    setModalCerrando(true);
+    setTimeout(() => {
+      setModalAbierto(false);
+      setModalCerrando(false);
+      setTratamientoSeleccionado(null);
+    }, 300);
+  };
+
+  const cerrarModalPorFondo = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      cerrarModal();
+    }
   };
 
   return (
@@ -90,8 +102,17 @@ export default function Tratamientos() {
       </main>
 
       {modalAbierto && tratamientoSeleccionado && (
-        <div className="fixed inset-0 backdrop-blur-sm  bg-opacity-20 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div
+          onClick={cerrarModalPorFondo}
+          className={`fixed inset-0 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50 p-4 ${
+            modalCerrando ? "animate-fadeOut" : "animate-fadeIn"
+          }`}
+        >
+          <div
+            className={`bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 ${
+              modalCerrando ? "animate-scaleOut" : "animate-scaleIn"
+            }`}
+          >
             <div className="flex items-center justify-between p-6 border-b border-gray-200">
               <div className="flex items-center gap-4">
                 <span className="text-3xl">
@@ -106,13 +127,13 @@ export default function Tratamientos() {
               </div>
               <button
                 onClick={cerrarModal}
-                className="text-gray-500 hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+                className="text-gray-500 hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-all duration-200 transform hover:scale-110 hover:rotate-90"
               >
                 ×
               </button>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className="p-6 space-y-6 modal-content">
               <div>
                 <h3
                   className="text-lg font-semibold text-gray-800 mb-2"
