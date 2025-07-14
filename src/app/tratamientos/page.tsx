@@ -178,7 +178,7 @@ export default function Tratamientos() {
                   Agendar cita
                 </a>
                 <a
-                  href={`https://wa.me/4646516461?text=Hola, me interesa el tratamiento de ${tratamientoSeleccionado.titulo}`}
+                  href={`https://wa.me/+524646516461?text=Hola, me interesa el tratamiento de ${tratamientoSeleccionado.titulo}`}
                   className="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 text-center"
                 >
                   WhatsApp
