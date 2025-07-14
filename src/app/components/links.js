@@ -20,6 +20,6 @@ export const navigationLinks = [
 ];
 
 export const contactLink = {
-  label: "Contacto",
+  label: "Agendar cita",
   href: "/contacto",
 };

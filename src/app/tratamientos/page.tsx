@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "../components/UI/header";
-import { tratamientos } from "../tratamientos";
+import { tratamientos } from "../components/tratamientos";
 import { useState } from "react";
 
 export default function Tratamientos() {
